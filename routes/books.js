@@ -3,8 +3,7 @@ const router = express.Router();
 let books = require(`../public/js/books.json`);
 
 //get books
-router.get('/', (req, res) => { 
-    console.log(req.xhr);
+router.get('/', (req, res) => {
     res.render('index', {books: books})
 });
 
@@ -56,7 +55,7 @@ router.put('/api/books/:isbn', (req, res) => {
         const updBook = req.body;
         let pos = books.map((e) => e.isbn).indexOf(req.params.isbn);
         let book = books[pos];
-            console.log(books);
+            //console.log(books);
             book.title = updBook.title ? updBook.title : book.title;
             book.author = updBook.author ? updBook.author : book.author;
             book.published = updBook.published ? updBook.published : book.published;

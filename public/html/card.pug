@@ -1,18 +1,18 @@
 extends layout
 block content
-  p OH HI
-  form(method = "post", action="/api/books/"+book.isbn+'?_method=PUT')
-                .form-group
+  h1.w3-center Book card
+  form.w3-auto(method = "post", action="/api/books/"+book.isbn+'?_method=PUT')
+                .w3-input
                     label(for="title") title
-                    input.form-control(type="text" name="title")
-                .form-group
+                    input.w3-input(type="text" name="title")
+                .w3-input
                     label(for="author") author
-                    input.form-control(type="text" name="author")
-                .form-group
+                    input.w3-input(type="text" name="author")
+                .w3-input
                     label(for="published") published
-                    input.form-control(type="text" name="published")
-                input.btn.btn-primary.btn-block(type="submit" value="change book")
-  div.w3-container
+                    input.w3-input(type="text" name="published")
+                input.w3-button(type="submit" value="change book")
+  div.w3-container.w3-border.w3-auto
     h3 #{book.title}
         span
             - let isbn = book.isbn 

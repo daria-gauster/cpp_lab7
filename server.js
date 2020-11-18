@@ -14,7 +14,6 @@ app.set(`view engine`, `pug`);
 
 app.use(methodOverride('_method')); 
 
-
 //body parser middleware 
 app.use(express.json());
 app.use(express.urlencoded({extended: true }));
@@ -27,3 +26,9 @@ app.use('/card', router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(PORT, () => console.log(`yahwoo @ ${PORT}`)); 
+
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
