@@ -1,12 +1,12 @@
 const express = require(`express`);
 const router = express.Router();
-let books = require(`../../public/js/books.json`);
+let books = require(`../public/js/books.json`);
 
 //get books
-router.get('/', (req, res) =>  res.render('index', {books}));
+router.get('/', (req, res) =>  res.render('index', {books: books}));
 
 //get single book
-router.get('/:isbn', (req, res) => {
+router.get('/api/books/:isbn', (req, res) => {
     const found = books.some(book => book.isbn === req.params.isbn);
     if(found)
         res.json(books.filter(book => book.isbn === req.params.isbn));
@@ -21,7 +21,7 @@ router.get('/available/true', (req, res) => {
 });
 
 //create book
-router.post('/', (req, res) => {
+router.post('/api/books/', (req, res) => {
     const newBook = {
         title: req.body.title,
         subtitle: req.body.subtitle,
@@ -37,9 +37,17 @@ router.post('/', (req, res) => {
 
 });
 
+
+//book card
+router.get('/card/:isbn', (req, res) => {
+    book = books.find(book => book.isbn === req.params.isbn);
+    res.render('card', book);
+    
+});
+
 //update book
 
-router.put('/:isbn', (req, res) => {
+router.put('/api/books/:isbn', (req, res) => {
     const found = books.some(book => book.isbn === req.params.isbn);
     if(found){
         const updBook = req.body;
@@ -57,12 +65,8 @@ router.put('/:isbn', (req, res) => {
     
 });
 
-router.get("/card.html", (req, res) => {
-    res.render("card");
-});
-
 //delete book 
-router.delete('/:isbn', (req, res) => {
+router.delete('/api/books/:isbn', (req, res) => {
     const found = books.some(book => book.isbn === req.params.isbn);
     
     if(found){
