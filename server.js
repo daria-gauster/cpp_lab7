@@ -25,7 +25,7 @@ app.use('/card', router);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(PORT, () => console.log(`yahwoo @ ${PORT}`)); 
+app.listen(PORT, () => console.log(`server started on @ ${PORT}`)); 
 
 // app.use((req, res, next) => {
 //     res.header("Access-Control-Allow-Origin", "*");
