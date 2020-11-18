@@ -1,37 +1,36 @@
-doctype html
-html
-    head
-        title home library
-        link(rel="stylesheet",href="https://www.w3schools.com/w3css/4/w3.css")
-        link(href="https://fonts.googleapis.com/css?family=RobotoDraft",rel='stylesheet' type='text/css')
-        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
-    body
-    .container.mt-4
-            h1 books
+extends layout
+
+block content
+    .w3-container.w3-auto
+            h1.w3-center books
             form.mb-4(action="/api/books", method="POST")
-                .form-group
+                .w3-input
                     label(for="title") title
-                    input.form-control(type="text" name="title")
-                .form-group
+                    input.w3-input(type="text" name="title")
+                .w3-input
                     label(for="subtitle") subtitle
-                    input.form-control(type="text" name="subtitle")
-                .form-group
+                    input.w3-input(type="text" name="subtitle")
+                .w3-input
                     label(for="author") author
-                    input.form-control(type="text" name="author")
-                .form-group
+                    input.w3-input(type="text" name="author")
+                .w3-input
                     label(for="publisher") publisher
-                    input.form-control(type="text" name="publisher")
-                input.btn.btn-primary.btn-block(type="submit" value="add book")
-            h4 books
-            form(method="get" action="/api/books/available/true")
-                input(type='submit' value="AVAILABLE")
-            form(method="get" action="/api/books")
-                input(type='submit' value="ALL BOOKS")
-            table(width="100%", border='1')
+                    input.w3-input(type="text" name="publisher")
+                input.w3-button(type="submit" value="add book")
+            h4.w3-center book list
+            .w3-left
+                span
+                    form(method="get" action="/available/true")
+                        input.w3-button(type='submit' value="AVAILABLE")
+                span    
+                    form(method="get" action="/")
+                        input.w3-button(type='submit' value="ALL BOOKS")
+            //- button#xhrbutt xhr test
+            table.w3-table-all(width="100%", border='1')
                 each book in books
                     tr
                         td
-                            a(href="../../../public/html/test.html")
+                            a(href="/card/"+book.isbn)
                                 div.w3-container
                                     h3 #{book.title}
                                         span
@@ -52,6 +51,9 @@ html
                                             h3.w3-right EXPIRED
                                     else 
                                         h4 AVAILABLE
+    script(type='text/javascript' src="../js/app.js")
+    
+    
                                 
                  
             

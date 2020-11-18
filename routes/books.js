@@ -1,12 +1,14 @@
 const express = require(`express`);
 const router = express.Router();
-let books = require(`../../public/js/books.json`);
+let books = require(`../public/js/books.json`);
 
 //get books
-router.get('/', (req, res) =>  res.render('index', {books}));
+router.get('/', (req, res) => {
+    res.render('index', {books: books})
+});
 
 //get single book
-router.get('/:isbn', (req, res) => {
+router.get('/api/books/:isbn', (req, res) => {
     const found = books.some(book => book.isbn === req.params.isbn);
     if(found)
         res.json(books.filter(book => book.isbn === req.params.isbn));
@@ -21,7 +23,7 @@ router.get('/available/true', (req, res) => {
 });
 
 //create book
-router.post('/', (req, res) => {
+router.post('/api/books/', (req, res) => {
     const newBook = {
         title: req.body.title,
         subtitle: req.body.subtitle,
@@ -37,32 +39,36 @@ router.post('/', (req, res) => {
 
 });
 
-//update book
 
-router.put('/:isbn', (req, res) => {
-    const found = books.some(book => book.isbn === req.params.isbn);
-    if(found){
-        const updBook = req.body;
-        books.forEach(book => {
-            if(book.isbn === req.params.isbn){
-                book.title = updBook.title ? updBook.title : book.title;
-                book.author = updBook.author ? updBook.author : book.author;
-                book.published = updBook.published ? updBook.published : book.published;
-                res.json({msg: 'book was updated', book: book});
-            }
-        });
-    }
-    else
-        res.status(400).json({msg: "book not found"});
+//book card
+router.get('/card/:isbn', (req, res) => {
+    book = books.find(book => book.isbn === req.params.isbn);
+    res.render('card', book);
     
 });
 
-router.get("/card.html", (req, res) => {
-    res.render("card");
+//update book
+
+router.put('/api/books/:isbn', (req, res) => {
+    const found = books.some(book => book.isbn === req.params.isbn);
+    if(found){
+        const updBook = req.body;
+        let pos = books.map((e) => e.isbn).indexOf(req.params.isbn);
+        let book = books[pos];
+            //console.log(books);
+            book.title = updBook.title ? updBook.title : book.title;
+            book.author = updBook.author ? updBook.author : book.author;
+            book.published = updBook.published ? updBook.published : book.published;
+            books.splice(pos, 1, book);
+            // res.json({msg: 'book was updated', books});
+            res.render('index', {books});
+    }
+    else
+        res.status(400).json({msg: "book not found"});
 });
 
 //delete book 
-router.delete('/:isbn', (req, res) => {
+router.delete('/api/books/:isbn', (req, res) => {
     const found = books.some(book => book.isbn === req.params.isbn);
     
     if(found){
