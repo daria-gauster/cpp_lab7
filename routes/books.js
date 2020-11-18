@@ -3,7 +3,10 @@ const router = express.Router();
 let books = require(`../public/js/books.json`);
 
 //get books
-router.get('/', (req, res) =>  res.render('index', {books: books}));
+router.get('/', (req, res) => { 
+    console.log(req.xhr);
+    res.render('index', {books: books})
+});
 
 //get single book
 router.get('/api/books/:isbn', (req, res) => {
@@ -51,18 +54,18 @@ router.put('/api/books/:isbn', (req, res) => {
     const found = books.some(book => book.isbn === req.params.isbn);
     if(found){
         const updBook = req.body;
-        books.forEach(book => {
-            if(book.isbn === req.params.isbn){
-                book.title = updBook.title ? updBook.title : book.title;
-                book.author = updBook.author ? updBook.author : book.author;
-                book.published = updBook.published ? updBook.published : book.published;
-                res.json({msg: 'book was updated', book: book});
-            }
-        });
+        let pos = books.map((e) => e.isbn).indexOf(req.params.isbn);
+        let book = books[pos];
+            console.log(books);
+            book.title = updBook.title ? updBook.title : book.title;
+            book.author = updBook.author ? updBook.author : book.author;
+            book.published = updBook.published ? updBook.published : book.published;
+            books.splice(pos, 1, book);
+            // res.json({msg: 'book was updated', books});
+            res.render('index', {books});
     }
     else
         res.status(400).json({msg: "book not found"});
-    
 });
 
 //delete book 

@@ -22,6 +22,7 @@ block content
                 input(type='submit' value="AVAILABLE")
             form(method="get" action="/")
                 input(type='submit' value="ALL BOOKS")
+            button#xhrbutt xhr test
             table(width="100%", border='1')
                 each book in books
                     tr
@@ -47,6 +48,9 @@ block content
                                             h3.w3-right EXPIRED
                                     else 
                                         h4 AVAILABLE
+    script(type='text/javascript' src="../js/app.js")
+    
+    
                                 
                  
             

@@ -1,6 +1,17 @@
 extends layout
 block content
   p OH HI
+  form(method = "post", action="/api/books/"+book.isbn+'?_method=PUT')
+                .form-group
+                    label(for="title") title
+                    input.form-control(type="text" name="title")
+                .form-group
+                    label(for="author") author
+                    input.form-control(type="text" name="author")
+                .form-group
+                    label(for="published") published
+                    input.form-control(type="text" name="published")
+                input.btn.btn-primary.btn-block(type="submit" value="change book")
   div.w3-container
     h3 #{book.title}
         span
@@ -10,6 +21,7 @@ block content
     h4 #{book.subtitle}
     p by #{book.author}
     p #{book.publisher}
+    p published: #{book.published}
     p#isbn ISBN: #{book.isbn}
     hr
     if !book.available
